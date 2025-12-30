@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   pname = "outline-electron";
   version = "1.0.0";
 
-  src = ./src;
+  src = ./.;
 
   nativeBuildInputs = [ makeWrapper copyDesktopItems ];
 
@@ -30,11 +30,14 @@ stdenv.mkDerivation rec {
     runHook preInstall
 
     mkdir -p $out/lib/outline-electron
-    cp -r . $out/lib/outline-electron/
+    cp -r src/* $out/lib/outline-electron/
 
     mkdir -p $out/bin
     makeWrapper ${electron_39-bin}/bin/electron $out/bin/outline-electron \
       --add-flags "$out/lib/outline-electron"
+
+    mkdir -p $out/share/icons/hicolor/192x192/apps
+    cp assets/icon-192.png $out/share/icons/hicolor/192x192/apps/outline-electron.png
 
     runHook postInstall
   '';
