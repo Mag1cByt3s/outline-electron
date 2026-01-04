@@ -8,6 +8,10 @@ app.commandLine.appendSwitch('enable-smooth-scrolling');
 app.commandLine.appendSwitch('enable-gpu-rasterization');
 app.commandLine.appendSwitch('enable-zero-copy');
 
+// fix issue with too bright colors on wayland in chromium / electron
+// see: https://community.brave.app/t/washed-out-colors-when-hardware-acceleration-is-enabled/643668
+app.commandLine.appendSwitch('disable-features', 'WaylandWpColorManagerV1');
+
 let mainWindow;
 let isQuitting = false;
 
